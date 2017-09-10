@@ -2,16 +2,16 @@
 Backend for managing RSVP transaction states.
 
 ## Domain
-Each user is unqiquely identified by the passcode given to the user.  The must enter the correct 4-digit passcode to be able to RSVP for the event. Once the user confirms his/her RSVP status, a form must be filled.
+Each user is uniquely identified by the code given to the user.  The must enter the correct 4-digit code to be able to RSVP for the event. Once the user confirms his/her RSVP status, a form must be filled.
 
 ### States
-The possible states for a passcode (and hence a user) are:
+The possible states for an invitee are:
 
 #### UNVERIFIED
-*Trigger*: when entered into the designated Google Sheet, Zapier calls the Lambda that initializes a passcode instance.
+*Trigger*: when entered into the designated Google Sheet, Zapier calls the endpoint that initializes an invitee instance.
 
 #### VERIFIED
-*Trigger*: when user enters the valid passcode.
+*Trigger*: when user enters the valid code.
 
 #### RESPONDED
 *Trigger*: when the user responds to the invitation with `YES`, `NO` or `MAYBE`.
@@ -22,10 +22,10 @@ The possible states for a passcode (and hence a user) are:
 
 ## API
 
-* [POST /invitee/new](#post-invitee-new)
-* [GET /invitee?code=1234](#get-invitee-code-1234)
-* [PUT /invitee/<id>/rsvp](#put-invitee-id-rsvp)
-* [PUT /invitee/<id>/details](#put-invitee-id-details)
+* [POST /invitee/new](#post-inviteenew)
+* [GET /invitee?code=1234](#get-inviteecode1234)
+* [PUT /invitee/`<id>`/rsvp](#put-inviteeidrsvp)
+* [PUT /invitee/`<id>`/details](#put-inviteeiddetails)
 
 ### POST /invitee/new
 
@@ -127,7 +127,7 @@ Body: {
 }
 ```
 
-### PUT /invitee/<id>/rsvp
+### PUT /invitee/`<id>`/rsvp
 Update the RSVP status of the user.
 #### Request
 ```
@@ -146,7 +146,7 @@ Body: {
 }
 ```
 
-### PUT /invitee/<id>/details
+### PUT /invitee/`<id>`/details
 
 Enter and save form details entered by the user.
 #### Request
