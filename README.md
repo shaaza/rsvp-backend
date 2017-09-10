@@ -1,6 +1,14 @@
 # Micro RSVP
 Backend for managing RSVP transaction states.
 
+* [Domain](#domain)
+  * [States](#states)
+* [API](#api)
+  * [POST /invitee/new](#post-inviteenew)
+  * [GET /invitee?code=1234](#get-inviteecode1234)
+  * [PUT /invitee/`<id>`/rsvp](#put-inviteeidrsvp)
+  * [PUT /invitee/`<id>`/details](#put-inviteeiddetails)
+
 ## Domain
 Each user is uniquely identified by the code given to the user.  The must enter the correct 4-digit code to be able to RSVP for the event. Once the user confirms his/her RSVP status, a form must be filled.
 
@@ -21,11 +29,6 @@ The possible states for an invitee are:
 
 
 ## API
-
-* [POST /invitee/new](#post-inviteenew)
-* [GET /invitee?code=1234](#get-inviteecode1234)
-* [PUT /invitee/`<id>`/rsvp](#put-inviteeidrsvp)
-* [PUT /invitee/`<id>`/details](#put-inviteeiddetails)
 
 ### POST /invitee/new
 
