@@ -1,0 +1,27 @@
+(ns rsvp-backend.app
+  (:require [bidi.ring :as br]
+            [cider.nrepl :as cider]
+            [clojure.tools.nrepl.server :as nrepl]
+            [ring.adapter.jetty :as jetty]
+            [ring.middleware.json :as json]
+            [ring.middleware.params :as params]
+            [rsvp-backend.app.new-invitee :as new-invitee]
+            [rsvp-backend.app.util :as util]
+            [taoensso.timbre :as log]))
+
+
+(def routes ["/" [["" (br/->ResourcesMaybe {:prefix "public/"})]
+                  ["invitee" new-invitee/handler]
+                  [true (fn [_] (util/error-response 404 "Page not found."))]]
+             true (fn [_] (util/error-response 404 "Page not found."))])
+
+(def main-handler
+  (-> (br/make-handler routes)
+      json/wrap-json-response
+      params/wrap-params))
+
+(log/set-level! (util/get-config :logging :level))
+
+(defn start! [port nrepl-port]
+  (nrepl/start-server :port nrepl-port :handler cider/cider-nrepl-handler)
+  (jetty/run-jetty main-handler {:port port}))
