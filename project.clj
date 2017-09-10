@@ -2,7 +2,7 @@
   :description "RSVP Management System"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[bidi "1.19.0"]
+  :dependencies [[bidi "2.1.2"]
                  [cheshire "5.4.0"]
                  [clj-http "2.0.0"]
                  [com.taoensso/faraday "1.9.0"]
