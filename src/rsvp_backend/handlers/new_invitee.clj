@@ -1,4 +1,4 @@
-(ns rsvp-backend.app.new-invitee
+(ns rsvp-backend.handlers.new-invitee
   (:require [ring.util.response :as res]))
 
 (defn handler [{:keys [params]}]

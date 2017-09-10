@@ -5,8 +5,8 @@
             [ring.adapter.jetty :as jetty]
             [ring.middleware.json :as json]
             [ring.middleware.params :as params]
-            [rsvp-backend.app.new-invitee :as new-invitee]
-            [rsvp-backend.app.util :as util]
+            [rsvp-backend.handlers.new-invitee :as new-invitee]
+            [rsvp-backend.util :as util]
             [rsvp-backend.middleware.cors :as cors]
             [rsvp-backend.middleware.logging :as logging]
             [taoensso.timbre :as log]))

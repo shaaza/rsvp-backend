@@ -1,4 +1,4 @@
-(ns rsvp-backend.app.util
+(ns rsvp-backend.util
   (:require [cheshire.core :as json]
             [immuconf.config :as config]
             [ring.util.response :as res]))
