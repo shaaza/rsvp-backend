@@ -7,6 +7,8 @@
             [ring.middleware.params :as params]
             [rsvp-backend.app.new-invitee :as new-invitee]
             [rsvp-backend.app.util :as util]
+            [rsvp-backend.middleware.cors :as cors]
+            [rsvp-backend.middleware.logging :as logging]
             [taoensso.timbre :as log]))
 
 
@@ -18,10 +20,17 @@
 (def main-handler
   (-> (br/make-handler routes)
       json/wrap-json-response
-      params/wrap-params))
+      params/wrap-params
+      logging/wrap-log-request-response
+      logging/wrap-error-logging
+      cors/wrap-cors-policy))
 
 (log/set-level! (util/get-config :logging :level))
 
 (defn start! [port nrepl-port]
   (nrepl/start-server :port nrepl-port :handler cider/cider-nrepl-handler)
+  (log/info {:event ::nrepl-server-started
+             :message (str "NREPL server started on port " nrepl-port ".")})
+  (log/info {:event ::jetty-server-started
+             :message (str "Jetty server started on port " port ".")})
   (jetty/run-jetty main-handler {:port port}))
