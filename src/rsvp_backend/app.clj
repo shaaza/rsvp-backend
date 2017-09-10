@@ -12,8 +12,7 @@
             [taoensso.timbre :as log]))
 
 
-(def routes ["/" [["" (br/->ResourcesMaybe {:prefix "public/"})]
-                  ["invitee" new-invitee/handler]
+(def routes ["/" [["invitee/new" new-invitee/handler]
                   [true (fn [_] (util/error-response 404 "Page not found."))]]
              true (fn [_] (util/error-response 404 "Page not found."))])
 
