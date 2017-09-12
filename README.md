@@ -5,9 +5,10 @@ Backend for managing RSVP transaction states.
   * [States](#states)
 * [API](#api)
   * [POST /invitee/new](#post-inviteenew)
-  * [GET /invitee?code=1234](#get-inviteecode1234)
-  * [PUT /invitee/`<id>`/rsvp](#put-inviteeidrsvp)
-  * [PUT /invitee/`<id>`/details](#put-inviteeiddetails)
+  * [GET /invitee/`<code>`](#get-inviteecode)
+  * [PUT /invitee/`<code>`/metadata](#put-inviteecodemetadata)
+  * [PUT /invitee/`<code>`/rsvp](#put-inviteecodersvp)
+  * [PUT /invitee/`<code>`/details](#put-inviteecodedetails)
 
 ## Domain
 Each user is uniquely identified by the code given to the user.  The must enter the correct 4-digit code to be able to RSVP for the event. Once the user confirms his/her RSVP status, a form must be filled.
@@ -137,8 +138,8 @@ Update the prefilled metadata of the invitation.
 URL: /invitee?code=1234
 Method: PUT
 Body: {
-	originationSource: "Kadima",
-	givenBy: "Alexis K"
+	origination_source: "Kadima",
+	given_by: "Alexis K"
 }
 ```
 
@@ -158,7 +159,7 @@ URL: /invitee?code=1234
 Method: PUT
 Body: {
 	response: "YES",
-	rsvpState: "RESPONDED"
+	rsvp_state: "RESPONDED"
 }
 ```
 
