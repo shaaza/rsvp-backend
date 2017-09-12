@@ -12,18 +12,18 @@
 
 (defn create-invitee
   "Add a new invitee to the database"
-  [{:keys [name code date-given given-by pre-entered-company pre-entered-title origination-source relationship]
-    :or {name nil code nil date-given nil given-by nil pre-entered-company nil pre-entered-title nil origination-source nil relationship nil}}]
+  [{:keys [name code date_given given_by pre_entered_company pre_entered_title origination_source relationship]
+    :or {name nil code nil date_given nil given_by nil pre_entered_company nil pre_entered_title nil origination_source nil relationship nil}}]
   (ddb/put-item
    client-opts
    db-name
    {:name name
     :code (Integer/parseInt code)
-    :date_given date-given
-    :given_by given-by
-    :pre_entered_company pre-entered-company
-    :pre_entered_title pre-entered-title
-    :origination_source origination-source
+    :date_given date_given
+    :given_by given_by
+    :pre_entered_company pre_entered_company
+    :pre_entered_title pre_entered_title
+    :origination_source origination_source
     :relationship relationship
     :confirmation "UNVERIFIED"
     :rsvp_state "UNVERIFIED"})
@@ -40,7 +40,7 @@
 (defn update-invitee-metadata
   "Update prefilled invitee details"
   [code {:keys [given_by origination_source]
-         :or {given_by nil origination-source nil}}]
+         :or {given_by nil origination_source nil}}]
   (ddb/update-item client-opts db-name {:code code}
                    {:update-map {:given_by [:put given_by]
                                  :origination_source [:put origination_source]}}))
