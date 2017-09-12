@@ -135,7 +135,7 @@ Body: {
 Update the prefilled metadata of the invitation.
 #### Request
 ```
-URL: /invitee?code=1234
+URL: /invitee/1234/metadata
 Method: PUT
 Body: {
 	origination_source: "Kadima",
@@ -155,7 +155,7 @@ Body: {
 Update the RSVP status of the user.
 #### Request
 ```
-URL: /invitee?code=1234
+URL: /invitee/1234/rsvp
 Method: PUT
 Body: {
 	response: "YES",
