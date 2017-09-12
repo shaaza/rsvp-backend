@@ -1,5 +1,5 @@
 (ns rsvp-backend.middleware.cors
-  (:require [rsvp-backend.app.util :as util]))
+  (:require [rsvp-backend.util :as util]))
 
 (defn wrap-cors-policy
   [handler]

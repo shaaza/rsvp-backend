@@ -1,5 +1,7 @@
 (ns rsvp-backend.middleware.logging
-  (:require [ring.util.response :as response]
+  (:require [cheshire.core :as json]
+            [ring.util.response :as response]
+            [ring.util.request :as req]
             [taoensso.timbre :as log]))
 
 (def standard-ring-request-keys
@@ -11,7 +13,8 @@
  [handler]
   (fn [request]
    (log/debug {:event    ::request
-               :request  (select-keys request standard-ring-request-keys)})
+               :request  (select-keys request standard-ring-request-keys)
+               :payload  (json/parse-string (req/body-string request) true)})
    (let [response (handler request)]
      (log/debug {:event    ::response
                  :response response})
