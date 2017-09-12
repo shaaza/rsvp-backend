@@ -1,0 +1,5 @@
+{:aws
+ {:dynamodb
+  {:access-key "your-access-key"
+   :secret-key "your-secret-key"
+   :db-name :dev_RSVPForm}}}
