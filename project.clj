@@ -20,6 +20,6 @@
                  [ring/ring-json "0.4.0"]]
   :plugins       [[refactor-nrepl "2.3.0-SNAPSHOT"]
                  [cider/cider-nrepl "0.12.0"]]
-  :main ^:skip-aot rsvp-backend.core
+  :main rsvp-backend.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
