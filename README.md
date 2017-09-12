@@ -56,7 +56,7 @@ Content-Type: application/json
 Body: {
     status: "SUCCESS",
     data: {
-		id: 123,
+		code: 123,
 		rsvp_state: "UNVERIFIED"
 	},
 }
@@ -68,7 +68,7 @@ Content-Type: application/json
 Body: {
     status: "CODE_ALREADY_EXISTS",
 	data: {
-		id: 123
+		code: 123
 	}
 }
 ```
@@ -81,13 +81,13 @@ Body: {
 }
 ```
 
-### GET /invitee?code=1234
+### GET /invitee/`<code>`
 
 Given a code, checks if it is valid, and returns the host's name from the database, and the state of the passcode in the flow. If it has already been verified, then the user will be flagged in the db.
 
 #### Request
 ```
-URL: /invitee?code=1234
+URL: /invitee/1234
 Method: GET
 ```
 
@@ -98,15 +98,15 @@ Content-Type: application/json
 Body: {
     status: "SUCCESS",
 	data: {
-		id: 14
 		name: "Alex Ferguson",
 		code: "7643",
-		date_given:	"",
-		given_by: "City of Scottsdale",
+		dateGiven:	"",
+		givenBy: "City of Scottsdale",
 		company: "Some Company",
 		title: "President",
 		relationship: "Friend",
-		rsvp_state: "VERIFIED"
+		originationSource: "Kadima",
+		rsvpState: "VERIFIED"
 	}
 }
 ```
@@ -117,8 +117,8 @@ Content-Type: application/json
 Body: {
     status: "SUCCESS",
 	data: {
-		id: 123
-		rsvp_state: "RESPONDED"
+		code: 123
+		rsvpState: "RESPONDED"
 	}
 }
 ```
@@ -130,14 +130,15 @@ Body: {
 }
 ```
 
-### PUT /invitee/`<id>`/rsvp
-Update the RSVP status of the user.
+### PUT /invitee/`<code>`/metadata
+Update the prefilled metadata of the invitation.
 #### Request
 ```
 URL: /invitee?code=1234
 Method: PUT
 Body: {
-	rsvp_state: "RESPONDED"
+	originationSource: "Kadima",
+	givenBy: "Alexis K"
 }
 ```
 
@@ -149,7 +150,27 @@ Body: {
 }
 ```
 
-### PUT /invitee/`<id>`/details
+### PUT /invitee/`<code>`/rsvp
+Update the RSVP status of the user.
+#### Request
+```
+URL: /invitee?code=1234
+Method: PUT
+Body: {
+	response: "YES",
+	rsvpState: "RESPONDED"
+}
+```
+
+#### Success Response (200 OK)
+```
+Content-Type: application/json
+Body: {
+    status: "SUCCESS",
+}
+```
+
+### PUT /invitee/`<code>`/details
 
 Enter and save form details entered by the user.
 #### Request
