@@ -18,15 +18,15 @@
    client-opts
    db-name
    {:name name
-    :code code
-    :dateGiven date-given
-    :givenBy given-by
-    :preEnteredCompany pre-entered-company
-    :preEnteredTitle pre-entered-title
-    :originationSource origination-source
+    :code (Integer/parseInt code)
+    :date_given date-given
+    :given_by given-by
+    :pre_entered_company pre-entered-company
+    :pre_entered_title pre-entered-title
+    :origination_source origination-source
     :relationship relationship
     :confirmation "UNVERIFIED"
-    :rsvpState "UNVERIFIED"})
+    :rsvp_state "UNVERIFIED"})
   code)
 
 
@@ -34,41 +34,41 @@
   "Given the passcode, get the prefilled invitee details"
   [code]
   (ddb/update-item client-opts db-name {:code code}
-                   {:update-map {:rsvpState [:put "VERIFIED"]}})
+                   {:update-map {:rsvp_state [:put "VERIFIED"]}})
   (ddb/get-item client-opts db-name {:code code}))
 
 (defn update-invitee-metadata
   "Update prefilled invitee details"
-  [code {:keys [given-by origination-source]
-         :or {given-by nil origination nil}}]
+  [code {:keys [given_by origination_source]
+         :or {given_by nil origination-source nil}}]
   (ddb/update-item client-opts db-name {:code code}
-                   {:update-map {:givenBy [:put given-by]
-                                 :originationSource [:put origination-source]}}))
+                   {:update-map {:given_by [:put given_by]
+                                 :origination_source [:put origination_source]}}))
 
 (defn update-rsvp-status
   "Allow the user to respond with YES, NO or MAYBE"
   [code response]
   (ddb/update-item client-opts db-name {:code code}
                    {:update-map {:confirmation [:put response]
-                                 :rsvpState [:put "RESPONDED"]}}))
+                                 :rsvp_state [:put "RESPONDED"]}}))
 
 (defn update-invitee-details
   "Update the user's data with the submitted form data"
-  [code {:keys [name company title address address-2 city state zip
-                email mobile-phone work-phone website]
-         :or {name nil company nil title nil address nil address-2 nil city nil state nil zip
-              nil email nil mobile-phone nil work-phone nil website nil}}]
+  [code {:keys [name company title address address_2 city state zip
+                email mobile_phone work_phone website]
+         :or {name nil company nil title nil address nil address_2 nil city nil state nil zip
+              nil email nil mobile_phone nil work_phone nil website nil}}]
   (ddb/update-item client-opts db-name {:code code}
                    {:update-map {:name [:put name]
                                  :company [:put company]
                                  :title [:put title]
                                  :address [:put address]
-                                 :address2 [:put address-2]
+                                 :address_2 [:put address_2]
                                  :city [:put city]
                                  :state [:put state]
                                  :zip [:put zip]
                                  :email [:put email]
-                                 :mobilePhone [:put mobile-phone]
-                                 :workPhone [:put work-phone]
+                                 :mobile_phone [:put mobile_phone]
+                                 :work_phone [:put work_phone]
                                  :website [:put website]
-                                 :rsvpState [:put "FORM_SUBMITTED"]}}))
+                                 :rsvp_state [:put "FORM_SUBMITTED"]}}))
