@@ -3,7 +3,7 @@
             [immuconf.config :as config]
             [ring.util.response :as res]))
 
-(defonce config-map (config/load "resources/config.edn"))
+(defonce config-map (config/load "resources/config.edn" "resources/sensitive_config.edn"))
 (defn get-config [& ks]
   (apply config/get config-map ks))
 
