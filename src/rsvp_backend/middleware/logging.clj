@@ -13,8 +13,7 @@
  [handler]
   (fn [request]
    (log/debug {:event    ::request
-               :request  (select-keys request standard-ring-request-keys)
-               :payload  (json/parse-string (req/body-string request) true)})
+               :request  (select-keys request standard-ring-request-keys)})
    (let [response (handler request)]
      (log/debug {:event    ::response
                  :response response})
