@@ -22,11 +22,11 @@
 
 (def main-handler
   (-> (br/make-handler routes)
-      json/wrap-json-body
-      json/wrap-json-response
-      params/wrap-params
       logging/wrap-log-request-response
       logging/wrap-error-logging
+      (json/wrap-json-body {:keywords? true :bigdecimals? true})
+      json/wrap-json-response
+      params/wrap-params
       cors/wrap-cors-policy))
 
 (log/set-level! (util/get-config :logging :level))
