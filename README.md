@@ -33,7 +33,7 @@ The possible states for an invitee are:
 
 ### POST /invitee/new
 
-Insert a new invitee into the db. Requires an auth key.
+Insert a new invitee into the db. Requires an auth key. In case an invitee with the specified code exists, it will be _replaced_.
 #### Request
 ```
 URL: /invitee/new
@@ -44,7 +44,7 @@ Content-Type: application/json
 Body: {
     name: "Alex Ferguson",
     code: "7643",
-    date_given:	"",
+    date_given:	"Kadima K",
 	given_by: "City of Scottsdale",
 	pre_entered_company: "Some Company",
 	pre_entered_title: "President",
@@ -60,17 +60,6 @@ Body: {
 		code: 123,
 		rsvp_state: "UNVERIFIED"
 	},
-}
-```
-
-#### Already Exists Response (403 Forbidden)
-```
-Content-Type: application/json
-Body: {
-    status: "CODE_ALREADY_EXISTS",
-	data: {
-		code: 123
-	}
 }
 ```
 
@@ -118,7 +107,15 @@ Content-Type: application/json
 Body: {
     status: "SUCCESS",
 	data: {
-		code: 123
+		name: "Alex Ferguson",
+		code: "7643",
+		dateGiven:	"",
+		givenBy: "City of Scottsdale",
+		company: "Some Company",
+		title: "President",
+		relationship: "Friend",
+		originationSource: "Kadima",
+		confirmation: "Maybe",
 		rsvpState: "RESPONDED"
 	}
 }
@@ -198,7 +195,7 @@ Body: {
 ```
 Content-Type: application/json
 Body: {
-	invitee_state: "FORM_SUBMITTED",
+	rsvp_state: "FORM_SUBMITTED",
 }
 ```
 
@@ -216,6 +213,6 @@ Body: [{"name": "Sh7", "email": "a@b.com"}, {"name": "Cr8", "email": "cr8@a.com"
 ```
 Content-Type: application/json
 Body: {
-	invitee_state: "FORM_SUBMITTED",
+	status: "SUCCESS",
 }
 ```
