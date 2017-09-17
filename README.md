@@ -9,7 +9,7 @@ Backend for managing RSVP transaction states.
   * [PUT /invitee/`<code>`/metadata](#put-inviteecodemetadata)
   * [PUT /invitee/`<code>`/rsvp](#put-inviteecodersvp)
   * [PUT /invitee/`<code>`/details](#put-inviteecodedetails)
-  * [PUT /invitee/`<code>`/additional-invitees](#put-inviteeadditional-invitees)
+  * [PUT /invitee/`<code>`/additional-invitees](#put-inviteecodeadditional-invitees)
 
 ## Domain
 Each user is uniquely identified by the code given to the user.  The must enter the correct 4-digit code to be able to RSVP for the event. Once the user confirms his/her RSVP status, a form must be filled.
