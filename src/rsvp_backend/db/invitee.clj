@@ -35,13 +35,19 @@
   "Given the passcode, get the prefilled invitee details"
   [code]
   (let [entry (try (ddb/get-item client-opts db-name {:code code})
-                   (catch Exception e "AWS_ERROR"))]
+                   (catch Exception e "AWS_ERROR"))
+        times-verified (or (:times_verified entry) 0)]
     (cond
       (and (not (nil? entry))
            (= (:rsvp_state entry) "UNVERIFIED"))
       (do (try (ddb/update-item client-opts db-name {:code code}
-                                {:update-map {:rsvp_state [:put "VERIFIED"]}})
-               (catch Exception e "AWS_ERROR"))))
+                                {:update-map {:rsvp_state [:put "VERIFIED"]
+                                              :times_verified [:put 1]}})
+               (catch Exception e "AWS_ERROR")))
+      (not (nil? entry))
+      (try (ddb/update-item client-opts db-name {:code code}
+                            {:update-map {:times_verified [:put (+ 1 times-verified)]}})
+               (catch Exception e "AWS_ERROR")))
     entry))
 
 (defn update-invitee-metadata
