@@ -19,7 +19,7 @@
         client-opts
         db-name
         {:name name
-         :code (Integer/parseInt code)
+         :code code
          :date_given date_given
          :given_by given_by
          :pre_entered_company pre_entered_company
@@ -28,8 +28,7 @@
          :relationship relationship
          :confirmation "UNVERIFIED"
          :rsvp_state "UNVERIFIED"})
-       (catch Exception e "AWS_ERROR"))
-  code)
+       (catch Exception e "AWS_ERROR")))
 
 
 (defn get-invitee
@@ -40,9 +39,9 @@
     (cond
       (and (not (nil? entry))
            (= (:rsvp_state entry) "UNVERIFIED"))
-      (try (ddb/update-item client-opts db-name {:code code}
-                            {:update-map {:rsvp_state [:put "VERIFIED"]}})
-           (catch Exception e "AWS_ERROR")))
+      (do (try (ddb/update-item client-opts db-name {:code code}
+                                {:update-map {:rsvp_state [:put "VERIFIED"]}})
+               (catch Exception e "AWS_ERROR"))))
     entry))
 
 (defn update-invitee-metadata

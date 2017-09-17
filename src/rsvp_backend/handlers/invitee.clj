@@ -8,47 +8,56 @@
 
 (defn new-invitee
   [request]
-  (let [query (:query (:params request))]
-    (log/debug (:body request))
-    (res/response {:status "SUCCESS"
-                   :data {:code (db/create-invitee (clj-walk/keywordize-keys (:body request)))}})))
+  (let [query (:query (:params request))
+        keywordized-req-body (clj-walk/keywordize-keys (:body request))
+        code (Integer/parseInt (:code keywordized-req-body))
+        updated-req-body (assoc keywordized-req-body :code code)
+        resp (db/create-invitee updated-req-body)]
+    (if (= resp "AWS_ERROR")
+      (res/status (res/response {:status "AWS_ERROR"}) 500)
+      (res/response {:status "SUCCESS" :data {:code code}}))))
 
 (defn get-invitee
   [request]
   (let [code (:code (:route-params request))
         data (db/get-invitee (Integer/parseInt code))]
-    (if (not (nil? data))
-      (res/response {:status "SUCCESS"
-                     :data data})
-      (res/status
-       (res/response {:status "NOT_FOUND"})
-       404))))
+    (cond
+      (nil? data) (res/status (res/response {:status "NOT_FOUND"}) 404)
+      (= data "AWS_ERROR") (res/status (res/response {:status "AWS_ERROR"}) 500)
+      true (res/response {:status "SUCCESS" :data (assoc data :rsvp_state "VERIFIED")}))))
 
 (defn update-metadata
   [request]
-  (let [code (:code (:route-params request))]
-    (db/update-invitee-metadata (Integer/parseInt code) (clj-walk/keywordize-keys (:body request)))
-    (res/response {:status "SUCCESS"})))
+  (let [code (Integer/parseInt (:code (:route-params request)))
+        keywordized-req-body (clj-walk/keywordize-keys (:body request))
+        resp (db/update-invitee-metadata code keywordized-req-body)]
+    (if (= resp "AWS_ERROR")
+      (res/status (res/response {:status "AWS_ERROR"}) 500)
+      (res/response {:status "SUCCESS"}))))
 
 (defn update-rsvp
   [request]
-  (let [code (:code (:route-params request))
-        response (:response (clj-walk/keywordize-keys (:body request)))]
-    (db/update-rsvp-status (Integer/parseInt code) response)
-    (res/response {:status "SUCCESS"})))
+  (let [code (Integer/parseInt (:code (:route-params request)))
+        user-response (:response (clj-walk/keywordize-keys (:body request)))
+        resp (db/update-rsvp-status code user-response)]
+    (if (= resp "AWS_ERROR")
+      (res/status (res/response {:status "AWS_ERROR"}) 500)
+      (res/response {:status "SUCCESS"}))))
 
 (defn update-details
   [request]
-  (let [code (:code (:route-params request))]
-    (db/update-invitee-details (Integer/parseInt code) (clj-walk/keywordize-keys (:body request))))
-  (res/response {:rsvp_state "FORM_SUBMITTED"}))
+  (let [code (Integer/parseInt (:code (:route-params request)))
+        keywordized-req-body (clj-walk/keywordize-keys (:body request))
+        resp (db/update-invitee-details code keywordized-req-body)]
+    (if (= resp "AWS_ERROR")
+      (res/status (res/response {:status "AWS_ERROR"}) 500)
+      (res/response {:status "SUCCESS" :rsvp_state "FORM_SUBMITTED"}))))
 
 (defn update-additional-invitees
   [request]
-  (let [code (:code (:route-params request))]
-    (db/update-additional-invitees
-     (Integer/parseInt code)
-     {:additional_invitees_json (json/generate-string
-                                 (clj-walk/keywordize-keys (:body request))
-                                 {:pretty true})})
-    (res/response {:status "SUCCESS"})))
+  (let [code (Integer/parseInt (:code (:route-params request)))
+        json-string (json/generate-string (clj-walk/keywordize-keys (:body request)) {:pretty true})
+        resp (db/update-additional-invitees code {:additional_invitees_json json-string})]
+    (if (= resp "AWS_ERROR")
+      (res/status (res/response {:status "AWS_ERROR"}) 500)
+      (res/response {:status "SUCCESS"}))))

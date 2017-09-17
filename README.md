@@ -195,6 +195,7 @@ Body: {
 ```
 Content-Type: application/json
 Body: {
+	status: "SUCCESS",
 	rsvp_state: "FORM_SUBMITTED",
 }
 ```
