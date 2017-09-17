@@ -55,9 +55,9 @@
 (defn update-invitee-details
   "Update the user's data with the submitted form data"
   [code {:keys [name company title address address_2 city state zip
-                email mobile_phone work_phone website]
+                email mobile_number work_phone website]
          :or {name nil company nil title nil address nil address_2 nil city nil state nil zip
-              nil email nil mobile_phone nil work_phone nil website nil}}]
+              nil email nil mobile_number nil work_phone nil website nil}}]
   (ddb/update-item client-opts db-name {:code code}
                    {:update-map {:name [:put name]
                                  :company [:put company]
@@ -68,7 +68,7 @@
                                  :state [:put state]
                                  :zip [:put zip]
                                  :email [:put email]
-                                 :mobile_phone [:put mobile_phone]
+                                 :mobile_number [:put mobile_number]
                                  :work_phone [:put work_phone]
                                  :website [:put website]
                                  :rsvp_state [:put "FORM_SUBMITTED"]}}))
