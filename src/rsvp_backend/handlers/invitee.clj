@@ -13,9 +13,14 @@
                    :data {:code (db/create-invitee (clj-walk/keywordize-keys (:body request)))}})))
 
 (defn get-invitee [request]
-  (let [code (:code (:route-params request))]
-    (res/response {:status "SUCCESS"
-                   :data (db/get-invitee (Integer/parseInt code))})))
+  (let [code (:code (:route-params request))
+        data (db/get-invitee (Integer/parseInt code))]
+    (if (not (nil? data))
+      (res/response {:status "SUCCESS"
+                     :data data})
+      (res/status
+       (res/response {:status "NOT_FOUND"})
+       404))))
 
 (defn update-metadata [request]
   (let [code (:code (:route-params request))]

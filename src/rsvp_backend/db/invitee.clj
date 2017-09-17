@@ -33,9 +33,11 @@
 (defn get-invitee
   "Given the passcode, get the prefilled invitee details"
   [code]
-  (ddb/update-item client-opts db-name {:code code}
-                   {:update-map {:rsvp_state [:put "VERIFIED"]}})
-  (ddb/get-item client-opts db-name {:code code}))
+  (let [entry (ddb/get-item client-opts db-name {:code code})]
+    (when (not (nil? entry))
+      (ddb/update-item client-opts db-name {:code code}
+                       {:update-map {:rsvp_state [:put "VERIFIED"]}}))
+    entry))
 
 (defn update-invitee-metadata
   "Update prefilled invitee details"
