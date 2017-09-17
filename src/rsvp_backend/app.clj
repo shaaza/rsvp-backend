@@ -17,6 +17,7 @@
                   [["invitee/" :code "/metadata"] invitee/update-metadata]
                   [["invitee/" :code "/rsvp"] invitee/update-rsvp]
                   [["invitee/" :code "/details"] invitee/update-details]
+                  [["invitee/" :code "/additional-invitees"] invitee/update-additional-invitees]
                   [true (fn [_] (util/error-response 404 "Page not found."))]]
              true (fn [_] (util/error-response 404 "Page not found."))])
 

@@ -74,3 +74,8 @@
                                  :work_phone [:put work_phone]
                                  :website [:put website]
                                  :rsvp_state [:put "FORM_SUBMITTED"]}}))
+
+(defn update-additional-invitees
+  [code {:keys [additional_invitees_json] :or [additional_invitees_json nil]}]
+  (ddb/update-item client-opts db-name {:code code}
+                   {:update-map {:additional_invitees [:put additional_invitees_json]}}))
