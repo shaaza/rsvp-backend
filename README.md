@@ -201,3 +201,21 @@ Body: {
 	invitee_state: "FORM_SUBMITTED",
 }
 ```
+
+### PUT /invitee/`<code>`/additional-invitees
+Enter a JSON array of additional invitees.
+
+#### Request
+```
+URL: /invitee/123/additional-invitees
+Method: PUT
+Body: [{"name": "Sh7", "email": "a@b.com"}, {"name": "Cr8", "email": "cr8@a.com"}]
+```
+
+#### Success Response (200 OK)
+```
+Content-Type: application/json
+Body: {
+	invitee_state: "FORM_SUBMITTED",
+}
+```
