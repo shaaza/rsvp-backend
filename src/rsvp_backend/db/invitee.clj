@@ -109,6 +109,33 @@
                         {:update-map {:additional_invitees [:put additional_invitees_json]}})
        (catch Exception e "AWS_ERROR")))
 
+(defn update-optional-info
+  "Update prefilled invitee details"
+  [code {:keys [is_advisor is_mentor is_affiliated_municipality
+                is_support_ventures is_interested_in_partnership
+                is_interested_in_innovation_fair startup_phase
+                any_funding_yet industry incubator
+                incubator_name corporate_partnerships]
+         :or {is_advisor nil is_mentor nil is_affiliated_municipality nil
+              is_support_ventures nil is_interested_in_partnership nil
+              is_interested_in_innovation_fair nil startup_phase nil
+              any_funding_yet nil industry nil incubator nil
+              incubator_name nil corporate_partnerships nil}}]
+  (try (ddb/update-item client-opts db-name {:code code}
+                        {:update-map {:is_advisor [:put is_advisor]
+                                      :is_mentor [:put is_mentor]
+                                      :is_affiliated_municipality [:put is_affiliated_municipality]
+                                      :is_support_ventures [:put is_support_ventures]
+                                      :is_interested_in_partnership [:put is_interested_in_partnership]
+                                      :is_interested_in_innovation_fair [:put is_interested_in_innovation_fair]
+                                      :startup_phase [:put startup_phase]
+                                      :any_funding_yet [:put any_funding_yet]
+                                      :industry [:put industry]
+                                      :incubator [:put incubator]
+                                      :incubator_name [:put incubator_name]
+                                      :corporate_partnerships [:put corporate_partnerships]
+                                      }})
+       (catch Exception e "AWS_ERROR")))
 
 (defn get-all-invitees
   []

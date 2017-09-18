@@ -251,7 +251,7 @@ Body: {
 	industry: "Hospitality",
 	incubator: "No",
 	incubator_name: "NULL",
-	corportate_partnerships: "No"
+	corporate_partnerships: "No"
 }
 ```
 
