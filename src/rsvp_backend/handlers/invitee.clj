@@ -24,7 +24,8 @@
     (cond
       (nil? data) (res/status (res/response {:status "NOT_FOUND"}) 404)
       (= data "AWS_ERROR") (res/status (res/response {:status "AWS_ERROR"}) 500)
-      true (res/response {:status "SUCCESS" :data (assoc data :rsvp_state "VERIFIED")}))))
+      (= data "ALREADY_RESPONDED_YES") (res/response {:status "ALREADY_RESPONDED"})
+      true (res/response {:status "SUCCESS" :data data}))))
 
 (defn update-metadata
   [request]
@@ -61,3 +62,10 @@
     (if (= resp "AWS_ERROR")
       (res/status (res/response {:status "AWS_ERROR"}) 500)
       (res/response {:status "SUCCESS"}))))
+
+(defn get-all-invitees
+  [request]
+  (let [resp (db/get-all-invitees)]
+    (if (= resp "AWS_ERROR")
+      (res/status (res/response {:status "AWS_ERROR"}) 500)
+      (res/response {:status "SUCCESS" :data resp}))))

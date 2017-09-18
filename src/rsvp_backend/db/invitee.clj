@@ -43,12 +43,25 @@
       (do (try (ddb/update-item client-opts db-name {:code code}
                                 {:update-map {:rsvp_state [:put "VERIFIED"]
                                               :times_verified [:put 1]}})
+               (assoc entry :rsvp_state "VERIFIED")
                (catch Exception e "AWS_ERROR")))
+      (and (not (nil? entry))
+           (= (:rsvp_state entry) "VERIFIED"))
+      (try (ddb/update-item client-opts db-name {:code code}
+                            {:update-map {:times_verified [:put (+ 1 times-verified)]}})
+           entry
+           (catch Exception e "AWS_ERROR"))
+      (and (not (nil? entry))
+           (or (= (:rsvp_state "RESPONDED"))
+               (= (:rsvp_state "FORM_SUBMITTED")))
+           (or (= (:confirmation entry) "Yes")
+               (= (:confirmation entry) "Maybe")))
+      "ALREADY_RESPONDED_YES"
       (not (nil? entry))
       (try (ddb/update-item client-opts db-name {:code code}
                             {:update-map {:times_verified [:put (+ 1 times-verified)]}})
-               (catch Exception e "AWS_ERROR")))
-    entry))
+           entry
+               (catch Exception e "AWS_ERROR")))))
 
 (defn update-invitee-metadata
   "Update prefilled invitee details"
@@ -93,4 +106,10 @@
   [code {:keys [additional_invitees_json] :or [additional_invitees_json nil]}]
   (try (ddb/update-item client-opts db-name {:code code}
                         {:update-map {:additional_invitees [:put additional_invitees_json]}})
+       (catch Exception e "AWS_ERROR")))
+
+
+(defn get-all-invitees
+  []
+  (try (ddb/scan client-opts db-name)
        (catch Exception e "AWS_ERROR")))
