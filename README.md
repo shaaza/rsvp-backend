@@ -233,3 +233,32 @@ Body: {
 	status: "SUCCESS",
 }
 ```
+
+### PUT /invitee/`<code>`/optional-info
+#### Request
+```
+URL: /invitee/123/optional-info
+Method: PUT
+Body: {
+	is_advisor: "Yes",
+	is_mentor: "No",
+	is_affiliated_municipality: "Yes",
+	is_support_ventures: "No",
+	is_interested_in_partnership: "Yes",
+	is_interested_in_innovation_fair: "Yes",
+	startup_phase:  "Idea",
+	any_funding_yet: "No",
+	industry: "Hospitality",
+	incubator: "No",
+	incubator_name: "NULL",
+	corportate_partnerships: "No"
+}
+```
+
+#### Response
+```
+Content-Type: application/json
+Body: {
+	status: "SUCCESS"
+}
+```
