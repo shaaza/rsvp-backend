@@ -11,7 +11,7 @@ Backend for managing RSVP transaction states.
   * [PUT /invitee/`<code>`/rsvp](#put-inviteecodersvp)
   * [PUT /invitee/`<code>`/details](#put-inviteecodedetails)
   * [PUT /invitee/`<code>`/additional-invitees](#put-inviteecodeadditional-invitees)
-
+  * [PUT /invitee/`<code>`/optional-info](#put-inviteecodeoptional-info)
 ## Domain
 Each user is uniquely identified by the code given to the user.  The must enter the correct 4-digit code to be able to RSVP for the event. Once the user confirms his/her RSVP status, a form must be filled.
 
@@ -108,7 +108,16 @@ Body: {
 }
 ```
 
-**If second time, having completed some parts of the flow**:
+**If second time, having responded "Yes" or "Maybe" initially**:
+```
+Content-Type: application/json
+Body: {
+	status: "ALREADY_RESPONDED"
+}
+```
+
+
+**If second time, having responded "No" initially**:
 ```
 Content-Type: application/json
 Body: {
@@ -116,14 +125,14 @@ Body: {
 	data: {
 		name: "Alex Ferguson",
 		code: "7643",
-		dateGiven:	"",
+		date_given:	"",
 		givenBy: "City of Scottsdale",
 		company: "Some Company",
 		title: "President",
 		relationship: "Friend",
-		originationSource: "Kadima",
+		origination_source: "Kadima",
 		confirmation: "Maybe",
-		rsvpState: "RESPONDED"
+		rsvp_state: "RESPONDED"
 	}
 }
 ```
