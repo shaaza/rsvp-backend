@@ -1,5 +1,6 @@
 (ns rsvp-backend.db.invitee
-  (:require [rsvp-backend.util :as util]
+  (:require [clojure.string :as str]
+            [rsvp-backend.util :as util]
             [taoensso.faraday :as ddb]))
 
 (def client-opts
@@ -52,10 +53,10 @@
            entry
            (catch Exception e "AWS_ERROR"))
       (and (not (nil? entry))
-           (or (= (:rsvp_state "RESPONDED"))
-               (= (:rsvp_state "FORM_SUBMITTED")))
-           (or (= (:confirmation entry) "Yes")
-               (= (:confirmation entry) "Maybe")))
+           (or (= (:rsvp_state entry) "RESPONDED")
+               (= (:rsvp_state entry) "FORM_SUBMITTED"))
+           (or (= (str/lower-case (:confirmation entry)) "yes")
+               (= (str/lower-case (:confirmation entry)) "maybe")))
       "ALREADY_RESPONDED_YES"
       (not (nil? entry))
       (try (ddb/update-item client-opts db-name {:code code}
