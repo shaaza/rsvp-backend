@@ -5,6 +5,7 @@ Backend for managing RSVP transaction states.
   * [States](#states)
 * [API](#api)
   * [POST /invitee/new](#post-inviteenew)
+  * [GET /invitee/all](#get-inviteeall)
   * [GET /invitee/`<code>`](#get-inviteecode)
   * [PUT /invitee/`<code>`/metadata](#put-inviteecodemetadata)
   * [PUT /invitee/`<code>`/rsvp](#put-inviteecodersvp)
@@ -32,6 +33,7 @@ The possible states for an invitee are:
 
 ## API
 
+For all endpoints, we return a status of `500` with `{ "status": "AWS_ERROR" }` in the case of an error calling AWS.
 ### POST /invitee/new
 
 Insert a new invitee into the db. Requires an auth key. In case an invitee with the specified code exists, it will be _replaced_.
@@ -71,6 +73,10 @@ Body: {
     status: "COULD_NOT_ADD_INVITEE",
 }
 ```
+
+### GET /invitee/all
+
+Gets all invitees.
 
 ### GET /invitee/`<code>`
 
