@@ -57,8 +57,8 @@
 (defn update-additional-invitees
   [request]
   (let [code (Integer/parseInt (:code (:route-params request)))
-        json-string (json/generate-string (clj-walk/keywordize-keys (:body request)) {:pretty true})
-        resp (db/update-additional-invitees code {:additional_invitees_json json-string})]
+        keywordized-request-body (clj-walk/keywordize-keys (:body request))
+        resp (db/update-additional-invitees code (:additional_invitees keywordized-request-body))]
     (if (= resp "AWS_ERROR")
       (res/status (res/response {:status "AWS_ERROR"}) 500)
       (res/response {:status "SUCCESS"}))))

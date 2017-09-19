@@ -223,7 +223,9 @@ Enter a JSON array of additional invitees.
 ```
 URL: /invitee/123/additional-invitees
 Method: PUT
-Body: [{"name": "Sh7", "email": "a@b.com"}, {"name": "Cr8", "email": "cr8@a.com"}]
+Body: {
+  additional_invitees: "Yes"
+}
 ```
 
 #### Success Response (200 OK)

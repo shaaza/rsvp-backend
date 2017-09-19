@@ -104,9 +104,9 @@
        (catch Exception e "AWS_ERROR")))
 
 (defn update-additional-invitees
-  [code {:keys [additional_invitees_json] :or [additional_invitees_json nil]}]
+  [code additional_invitees]
   (try (ddb/update-item client-opts db-name {:code code}
-                        {:update-map {:additional_invitees [:put additional_invitees_json]}})
+                        {:update-map {:additional_invitees [:put additional_invitees]}})
        (catch Exception e "AWS_ERROR")))
 
 (defn update-optional-info
