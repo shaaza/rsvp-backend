@@ -1,0 +1,5 @@
+{:aws
+ {:dynamodb
+  {:access-key "AKIAIQ6NNRB6MNGG6YWA"
+   :secret-key "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"
+   :db-name :prod_rsvp}}}
