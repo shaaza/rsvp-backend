@@ -1,5 +1,0 @@
-{:logging  {:level :debug}
- :cors     {:allowed-origins "*"
-            :allowed-methods "GET, POST, PUT, OPTIONS"
-            :allowed-headers "Content-Type"}
-}

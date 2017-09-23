@@ -3,11 +3,12 @@
 /checkouts
 pom.xml
 pom.xml.asc
-*.jar
 *.class
+*.jar
 /.lein-*
 /.nrepl-port
 .hgignore
 .hg/
 resources/sensitive_config.edn
+micro_rsvp
 micro_rsvp.tar.gz
