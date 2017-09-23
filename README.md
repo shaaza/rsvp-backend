@@ -1,6 +1,7 @@
 # Micro RSVP
 Backend for managing RSVP transaction states.
 
+* [Deployment](#deployment)
 * [Domain](#domain)
   * [States](#states)
 * [API](#api)
@@ -12,6 +13,47 @@ Backend for managing RSVP transaction states.
   * [PUT /invitee/`<code>`/details](#put-inviteecodedetails)
   * [PUT /invitee/`<code>`/additional-invitees](#put-inviteecodeadditional-invitees)
   * [PUT /invitee/`<code>`/optional-info](#put-inviteecodeoptional-info)
+
+
+## Deployment
+### Prerequisites
+This has been tested to work with the specified versions in the specified environments.
+1. Ubuntu 16.04.2 LTS (xenial)
+2. Docker Community Edition (version: `17.03.2-ce`)
+3. git
+
+### Building docker image and starting server
+This sequence of steps assumes that you want to use the JAR that's already in the repo, in the final build directory `<project-dir>/micro_rsvp`. In case you want to re-build that JAR, follow the steps outline in [Building the JAR](#building-the-jar).
+To get started quickly, you can also run the `sudo ./run.sh` shell script in the build directory `<project-dir>/micro_rsvp`, from that same build directory.
+1. `sudo systemctl start docker`: ensure dockerd is running.
+2. `sudo docker build -t micro_rsvp .`
+    
+	This builds an image with the name `micro_rsvp`
+3. `sudo systemctl enable docker`: ensure that docker is restarted on host reboot
+4. `sudo docker run -d --restart always --log-opt max-size=100m -p 80:80 micro_rsvp`
+    
+	* The `-d` option runs the server (that runs within the container) in the background. 
+    * `--restart always` restarts the server in every case except a `docker stop`, including a dockerd restart (which could be triggered by a host reboot)
+	* `--log-opt max-size=100m` caps the size of the logs to 100mb.
+	* `-p 80:80` maps the port 80 of the host to the port 80 of the container, where the web server is running.
+5. `sudo docker ps`: to verify that the step above worked.
+
+### Stopping
+1. `sudo docker ps`: to get the container id.
+2. `sudo docker stop <container-id>`: to stop the docker container.
+    e.g.: `sudo docker stop 3a389386d2a8`
+
+### Logs
+1. `sudo docker ps`: to get the container id
+2. `sudo docker logs <container-id>`: this will show you the logs of the running application.
+
+### Building the JAR
+If you want to build the JAR from source, you need to have the following installed on your system:
+1. Java 8 (i.e. 1.8)
+2. Clojure 1.8.0
+3. Leiningen 2.7.1
+
+Once this is done, you can simply run `./build.sh` from the project dir, which will create the build, resources, Dockerfile and a startup script in the directory `<project-dir>/micro_rsvp`.
 ## Domain
 Each user is uniquely identified by the code given to the user.  The must enter the correct 4-digit code to be able to RSVP for the event. Once the user confirms his/her RSVP status, a form must be filled.
 

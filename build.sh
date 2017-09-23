@@ -5,4 +5,4 @@ mkdir micro_rsvp
 cp target/uberjar/rsvp-backend-0.1.0-SNAPSHOT-standalone.jar micro_rsvp/micro_rsvp.jar
 cp -r resources micro_rsvp/
 cp Dockerfile micro_rsvp/
-tar -czf micro_rsvp.tar.gz micro_rsvp
+cp ./scripts/run.sh micro_rsvp/

@@ -11,4 +11,3 @@ pom.xml.asc
 .hg/
 resources/sensitive_config.edn
 micro_rsvp.tar.gz
-/micro_rsvp
