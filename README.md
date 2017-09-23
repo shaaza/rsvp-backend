@@ -22,8 +22,14 @@ This has been tested to work with the specified versions in the specified enviro
 2. Docker Community Edition (version: `17.03.2-ce`)
 3. git
 
+### Building the JAR
+1. Ensure you have copied the `resources/sensitive_config.sample.edn` to `resource/sensitive_config.edn`, and entered your respective access credentials.
+2. If you want to build the JAR from source, you need to have the following installed on your system:
+	* Java 8 (i.e. 1.8)
+	* Leiningen 2.7.1
+
+	Once this is done, you can simply run `./build.sh` from the project dir, which will create the build, resources, Dockerfile and a startup script in the directory `<project-dir>/micro_rsvp`.
 ### Building docker image and starting server
-This sequence of steps assumes that you want to use the JAR that's already in the repo, in the final build directory `<project-dir>/micro_rsvp`. In case you want to re-build that JAR, follow the steps outline in [Building the JAR](#building-the-jar).
 To get started quickly, you can also run the `sudo ./run.sh` shell script in the build directory `<project-dir>/micro_rsvp`, from that same build directory.
 1. `sudo systemctl start docker`: ensure dockerd is running.
 2. `sudo docker build -t micro_rsvp .`
@@ -47,13 +53,6 @@ To get started quickly, you can also run the `sudo ./run.sh` shell script in the
 1. `sudo docker ps`: to get the container id
 2. `sudo docker logs <container-id>`: this will show you the logs of the running application.
 
-### Building the JAR
-If you want to build the JAR from source, you need to have the following installed on your system:
-1. Java 8 (i.e. 1.8)
-2. Clojure 1.8.0
-3. Leiningen 2.7.1
-
-Once this is done, you can simply run `./build.sh` from the project dir, which will create the build, resources, Dockerfile and a startup script in the directory `<project-dir>/micro_rsvp`.
 ## Domain
 Each user is uniquely identified by the code given to the user.  The must enter the correct 4-digit code to be able to RSVP for the event. Once the user confirms his/her RSVP status, a form must be filled.
 
