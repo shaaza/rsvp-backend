@@ -13,6 +13,7 @@ Backend for managing RSVP transaction states.
   * [PUT /invitee/`<code>`/details](#put-inviteecodedetails)
   * [PUT /invitee/`<code>`/additional-invitees](#put-inviteecodeadditional-invitees)
   * [PUT /invitee/`<code>`/optional-info](#put-inviteecodeoptional-info)
+  * [PUT /invitee/`<code>`/invalid-serial](#put-inviteecodeinvalid-serial)
 
 
 ## Deployment
@@ -33,12 +34,12 @@ This has been tested to work with the specified versions in the specified enviro
 To get started quickly, you can also run the `sudo ./run.sh` shell script in the build directory `<project-dir>/micro_rsvp`, from that same build directory.
 1. `sudo systemctl start docker`: ensure dockerd is running.
 2. `sudo docker build -t micro_rsvp .`
-    
+
 	This builds an image with the name `micro_rsvp`
 3. `sudo systemctl enable docker`: ensure that docker is restarted on host reboot
 4. `sudo docker run -d --restart always --log-opt max-size=100m -p 80:80 micro_rsvp`
-    
-	* The `-d` option runs the server (that runs within the container) in the background. 
+
+	* The `-d` option runs the server (that runs within the container) in the background.
     * `--restart always` restarts the server in every case except a `docker stop`, including a dockerd restart (which could be triggered by a host reboot)
 	* `--log-opt max-size=100m` caps the size of the logs to 100mb.
 	* `-p 80:80` maps the port 80 of the host to the port 80 of the container, where the web server is running.
@@ -298,6 +299,24 @@ Body: {
 }
 ```
 
+#### Response
+```
+Content-Type: application/json
+Body: {
+	status: "SUCCESS"
+}
+```
+### POST /invitee/invalid-coin
+#### Request
+```
+URL: /invitee/invalid-coin
+Content-Type: application/json
+Body: {
+	email: "bla@bla.com"
+}
+```
+
+### Request
 #### Response
 ```
 Content-Type: application/json

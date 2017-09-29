@@ -6,11 +6,9 @@
 (def client-opts
   {:access-key (util/get-config :aws :dynamodb :access-key)
    :secret-key (util/get-config :aws :dynamodb :secret-key)
-   :endpoint "https://dynamodb.us-west-2.amazonaws.com"
-   })
+   :endpoint   (util/get-config :aws :dynamodb :endpoint)})
 
 (def db-name (util/get-config :aws :dynamodb :db-name))
-
 
 (defn create-invitee
   "Add a new invitee to the database"
@@ -140,4 +138,13 @@
 (defn get-all-invitees
   []
   (try (ddb/scan client-opts db-name)
+       (catch Exception e "AWS_ERROR")))
+
+(defn new-invalid-invitee
+  [email custom-db-name]
+  (try (ddb/put-item
+        client-opts
+        {:code (+ 9999000000 (rand-int 999) (rand-int 999))
+         :email email
+         :status "INVALID_USER"})
        (catch Exception e "AWS_ERROR")))

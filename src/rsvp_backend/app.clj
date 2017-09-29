@@ -14,6 +14,7 @@
 
 (def routes ["/" [["invitee/new" invitee/new-invitee]
                   ["invitee/all" invitee/get-all-invitees]
+                  ["invitee/invalid-coin" invitee/new-invalid-invitee]
                   [["invitee/" :code] invitee/get-invitee]
                   [["invitee/" :code "/metadata"] invitee/update-metadata]
                   [["invitee/" :code "/rsvp"] invitee/update-rsvp]
