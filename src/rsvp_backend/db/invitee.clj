@@ -142,7 +142,8 @@
   [email]
   (try (ddb/put-item
         client-opts
-        {:code (+ 9999000000 (rand-int 999) (rand-int 999))
+        db-name
+        {:code (+ 9000000 (rand-int 999) (rand-int 999))
          :email email
          :status "INVALID_USER"})
        (catch Exception e "AWS_ERROR")))
