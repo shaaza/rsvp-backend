@@ -2,4 +2,9 @@
  {:dynamodb
   {:access-key "your-access-key"
    :secret-key "your-secret-key"
-   :db-name :dev_RSVPForm}}}
+   :endpoint "https://us-west-something.amazonaws.com"
+   :db-name :dev_SomeForm}
+  :ses
+  {:access-key "youraccesskey"
+   :secret-key "yoursecretket"
+   :endpoint "http://us-west-something.com"}}}
