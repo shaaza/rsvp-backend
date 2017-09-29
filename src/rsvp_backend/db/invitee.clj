@@ -4,9 +4,7 @@
             [taoensso.faraday :as ddb]))
 
 (def client-opts
-  {:access-key (util/get-config :aws :dynamodb :access-key)
-   :secret-key (util/get-config :aws :dynamodb :secret-key)
-   :endpoint   (util/get-config :aws :dynamodb :endpoint)})
+  {:endpoint   (util/get-config :aws :dynamodb :endpoint)})
 
 (def db-name (util/get-config :aws :dynamodb :db-name))
 
