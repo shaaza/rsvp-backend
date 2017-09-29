@@ -139,7 +139,7 @@
        (catch Exception e "AWS_ERROR")))
 
 (defn new-invalid-invitee
-  [email custom-db-name]
+  [email]
   (try (ddb/put-item
         client-opts
         {:code (+ 9999000000 (rand-int 999) (rand-int 999))

@@ -83,7 +83,7 @@
   [request]
   (let [kw-req-body (clj-walk/keywordize-keys (:body request))
         email (:email kw-req-body)
-        resp (db/new-invalid-invitee)]
+        resp (db/new-invalid-invitee email)]
     (if (= resp "AWS_ERROR")
       (res/status (res/response {:status "AWS_ERROR"}) 500)
       (res/response {:status "SUCCESS"}))))
