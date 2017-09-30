@@ -8,14 +8,13 @@
 
 (defn new-invitee
   [request]
-  (let [query (:query (:params request))
-        request-method (:request-method request)
-        keywordized-req-body (clj-walk/keywordize-keys (:body request))
-        code (Long/parseLong (:code keywordized-req-body))
-        updated-req-body (assoc keywordized-req-body :code code)
-        resp (db/create-invitee updated-req-body)]
-    (if (= request-method :options)
-      (res/response {:status "OPTIONS_SUCCESS"})
+  (if (=  (:request-method request) :options)
+    (res/response {:status "OPTIONS_SUCCESS"})
+    (let [query (:query (:params request))
+          keywordized-req-body (clj-walk/keywordize-keys (:body request))
+          code (Long/parseLong (:code keywordized-req-body))
+          updated-req-body (assoc keywordized-req-body :code code)
+          resp (db/create-invitee updated-req-body)]
       (if (= resp "AWS_ERROR")
         (res/status (res/response {:status "AWS_ERROR"}) 500)
         (res/response {:status "SUCCESS" :data {:code code}})))))
