@@ -10,7 +10,7 @@
   [request]
   (let [query (:query (:params request))
         keywordized-req-body (clj-walk/keywordize-keys (:body request))
-        code (Integer/parseInt (:code keywordized-req-body))
+        code (Long/parseLong (:code keywordized-req-body))
         updated-req-body (assoc keywordized-req-body :code code)
         resp (db/create-invitee updated-req-body)]
     (if (= resp "AWS_ERROR")
@@ -20,7 +20,7 @@
 (defn get-invitee
   [request]
   (let [code (:code (:route-params request))
-        data (db/get-invitee (Integer/parseInt code))]
+        data (db/get-invitee (Long/parseLong code))]
     (cond
       (nil? data) (res/status (res/response {:status "NOT_FOUND"}) 404)
       (= data "AWS_ERROR") (res/status (res/response {:status "AWS_ERROR"}) 500)
@@ -29,7 +29,7 @@
 
 (defn update-metadata
   [request]
-  (let [code (Integer/parseInt (:code (:route-params request)))
+  (let [code (Long/parseLong (:code (:route-params request)))
         keywordized-req-body (clj-walk/keywordize-keys (:body request))
         resp (db/update-invitee-metadata code keywordized-req-body)]
     (if (= resp "AWS_ERROR")
@@ -38,7 +38,7 @@
 
 (defn update-rsvp
   [request]
-  (let [code (Integer/parseInt (:code (:route-params request)))
+  (let [code (Long/parseLong (:code (:route-params request)))
         user-response (:response (clj-walk/keywordize-keys (:body request)))
         resp (db/update-rsvp-status code user-response)]
     (if (= resp "AWS_ERROR")
@@ -47,7 +47,7 @@
 
 (defn update-details
   [request]
-  (let [code (Integer/parseInt (:code (:route-params request)))
+  (let [code (Long/parseLong (:code (:route-params request)))
         keywordized-req-body (clj-walk/keywordize-keys (:body request))
         resp (db/update-invitee-details code keywordized-req-body)]
     (if (= resp "AWS_ERROR")
@@ -56,7 +56,7 @@
 
 (defn update-additional-invitees
   [request]
-  (let [code (Integer/parseInt (:code (:route-params request)))
+  (let [code (Long/parseLong (:code (:route-params request)))
         keywordized-request-body (clj-walk/keywordize-keys (:body request))
         resp (db/update-additional-invitees code (:additional_invitees keywordized-request-body))]
     (if (= resp "AWS_ERROR")
@@ -65,7 +65,7 @@
 
 (defn update-optional-info
   [request]
-  (let [code (Integer/parseInt (:code (:route-params request)))
+  (let [code (Long/parseLong (:code (:route-params request)))
         keywordized-req-body (clj-walk/keywordize-keys (:body request))
         resp (db/update-optional-info code keywordized-req-body)]
     (if (= resp "AWS_ERROR")
