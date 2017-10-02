@@ -13,7 +13,7 @@ Backend for managing RSVP transaction states.
   * [PUT /invitee/`<code>`/details](#put-inviteecodedetails)
   * [PUT /invitee/`<code>`/additional-invitees](#put-inviteecodeadditional-invitees)
   * [PUT /invitee/`<code>`/optional-info](#put-inviteecodeoptional-info)
-  * [POST /invitee/`<code>`/invalid-coin](#post-inviteecodeinvalid-coin)
+  * [POST /invitee/`<code>`/invalid-coin](#post-inviteeinvalid-coin)
 
 
 ## Deployment
