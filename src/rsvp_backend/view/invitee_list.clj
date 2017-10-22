@@ -28,8 +28,8 @@
   [row]
   [:td
    (:rsvp_state row) [:br]
-   (when (and (not (= (:times_verified row) nil))
-              (> (:times_verified row) (Integer/parseInt 1))) "(Duplicate?)")])
+   (comment (when (and (not (= (:times_verified row) nil))
+                       (> (:times_verified row) (Integer/parseInt 1))) "(Duplicate?)"))])
 
 (defn render
   [data]
