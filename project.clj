@@ -9,6 +9,7 @@
                  [com.taoensso/timbre "2.7.1"]
                  [com.fasterxml.jackson.core/jackson-core "2.2.3"]
                  [com.fasterxml.jackson.core/jackson-databind "2.2.3"]
+                 [hiccup "1.0.5"]
                  [levand/immuconf "0.1.0"]
                  [medley "0.7.0"]
                  [org.clojure/clojure "1.8.0"]

@@ -6,13 +6,15 @@
             [ring.middleware.json :as json]
             [ring.middleware.params :as params]
             [rsvp-backend.handlers.invitee :as invitee]
+            [rsvp-backend.handlers.view :as view]
             [rsvp-backend.util :as util]
             [rsvp-backend.middleware.cors :as cors]
             [rsvp-backend.middleware.logging :as logging]
             [taoensso.timbre :as log]))
 
 
-(def routes ["/" [["invitee/new" invitee/new-invitee]
+(def routes ["/" [["admin/show" view/html-table]
+                  ["invitee/new" invitee/new-invitee]
                   ["invitee/all" invitee/get-all-invitees]
                   ["invitee/invalid-coin" invitee/new-invalid-invitee]
                   [["invitee/" :code] invitee/get-invitee]
