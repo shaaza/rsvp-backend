@@ -50,7 +50,9 @@
                [:th "Form State"]
                [:th "Contact"]
                [:th "Address"]
-               [:th "Company"]]]
+               [:th "Company"]
+               [:th "Startup Phase"]
+               [:th "Given By"]]]
              [:tbody
               (for [row data]
                 (when (and (not (= (:rsvp_state row) "UNVERIFIED"))
@@ -59,9 +61,15 @@
                    [:td (:code row)]
                    [:td (:name row)]
                    [:td (:confirmation row)]
-                   [:td (:additional_invitees "Yes")]
+                   [:td (:additional_invitees row)]
                    (form-state-details-td row)
                    (contact-details-td row)
                    (address-details-td row)
                    (company-details-td row)
+                   [:td (:startup_phase row)]
+                   [:td
+                    (str (:pre_entered_company row) ", " (:given_by row)) [:br]
+                    (:pre_entered_title row)]
+
+
                    ]))]]]]))
